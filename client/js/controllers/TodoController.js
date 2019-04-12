@@ -5,8 +5,8 @@ import TodoForm from '../views/TodoForm.js'
 export default {
     views: [],
 
-    create(name) {
-        const todo = TodoCollection.create(name)
+    async create(name) {
+        const todo = await TodoCollection.create(name)
         const view = new Todo(todo)
         view.mount()
     },

@@ -1,0 +1,16 @@
+{
+    "request": {
+        "path": "/todos/",
+        "method": "POST",
+        "body": {
+            "name": "{:name}"
+        }
+    },
+    "response": {
+        "status": 201,
+        "body": {
+            "id": 0,
+            "name": "{:name}"
+        }
+    }
+}

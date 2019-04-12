@@ -17,9 +17,17 @@ export default {
         return this.todos
     },
 
-    create(name) {
-        const todo = new TodoModel({ id: 0, name })
-        this.todos.push(todo)
+    async create(name) {
+        const todo = await fetch('/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({ name })
+        }).then(response => response.json())
+        const todoModel = new TodoModel({ ...todo })
+        console.log(todoModel)
+        this.todos.push(todoModel)
         return todo
     }
 }
