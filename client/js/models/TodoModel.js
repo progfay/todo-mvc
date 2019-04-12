@@ -4,6 +4,11 @@ class TodoModel {
         this.name = name
         this.done = done
     }
+
+    update(name, done) {
+        this.name = name
+        this.done = done
+    }
 }
 
 export default {
@@ -26,8 +31,20 @@ export default {
             body: JSON.stringify({ name })
         }).then(response => response.json())
         const todoModel = new TodoModel({ ...todo })
-        console.log(todoModel)
         this.todos.push(todoModel)
         return todo
+    },
+
+    async update(id, done) {
+        const target = this.todos.find(todo => todo.id === id)
+        const todo = await fetch(`/todos/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({ name: target.name, done })
+        }).then(response => response.json())
+        target.update(todo.name, todo.done)
+        return target
     }
 }
