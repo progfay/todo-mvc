@@ -46,5 +46,16 @@ export default {
         }).then(response => response.json())
         target.update(todo.name, todo.done)
         return target
+    },
+
+    async delete(id) {
+        const index = this.todos.findIndex(todo => todo.id === id)
+        await fetch(`/todos/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }).then(response => response.json())
+        this.todos.splice(index, 1)
     }
 }

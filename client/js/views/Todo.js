@@ -1,12 +1,12 @@
 import TodoController from '../controllers/TodoController.js'
 
 export default class Todo {
-    constructor({ id, name, done }) {
-        this.parent = document.querySelector('.todos')
-        this.element = document.createElement('li')
-        this.element.className = 'todo-item'
-        // TODO: XSS対策
-        this.element.innerHTML = `
+  constructor({ id, name, done }) {
+    this.parent = document.querySelector('.todos')
+    this.element = document.createElement('li')
+    this.element.className = 'todo-item'
+    // TODO: XSS対策
+    this.element.innerHTML = `
         <label class="todo-toggle__container">
           <input
             data-todo-id="${id}"
@@ -20,14 +20,19 @@ export default class Todo {
         <div class="todo-name">${name}</div>
         <div data-todo-id="${id}" class="todo-remove-button">x</div>
       `
-    }
+  }
 
-    mount() {
-        this.parent.appendChild(this.element)
-        this.element.addEventListener('change', (event) => {
-            const id = parseInt(event.target.getAttribute('data-todo-id'))
-            const done = event.target.checked
-            TodoController.update(id, done)
-        })
-    }
+  mount() {
+    this.parent.appendChild(this.element)
+    this.element.addEventListener('change', (event) => {
+      const id = parseInt(event.target.getAttribute('data-todo-id'))
+      const done = event.target.checked
+      TodoController.update(id, done)
+    })
+    this.element.getElementsByClassName('todo-remove-button')[0].addEventListener('click', (event) => {
+      const id = parseInt(event.target.getAttribute('data-todo-id'))
+      TodoController.delete(id)
+      this.parent.removeChild(this.element)
+    })
+  }
 }

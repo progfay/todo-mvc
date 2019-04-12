@@ -15,6 +15,10 @@ export default {
         TodoCollection.update(id, done)
     },
 
+    async delete(id) {
+        TodoCollection.delete(id)
+    },
+
     async render() {
         const todos = await TodoCollection.read()
         this.views = todos.map(todo => {
