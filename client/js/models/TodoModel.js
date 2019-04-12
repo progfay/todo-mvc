@@ -15,5 +15,11 @@ export default {
             return new TodoModel(todo)
         })
         return this.todos
+    },
+
+    create(name) {
+        const todo = new TodoModel({ id: 0, name })
+        this.todos.push(todo)
+        return todo
     }
 }

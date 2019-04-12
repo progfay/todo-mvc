@@ -1,8 +1,15 @@
 import TodoCollection from '../models/TodoModel.js'
 import Todo from '../views/Todo.js'
+import TodoForm from '../views/TodoForm.js'
 
 export default {
     views: [],
+
+    create(name) {
+        const todo = TodoCollection.create(name)
+        const view = new Todo(todo)
+        view.mount()
+    },
 
     async render() {
         const todos = await TodoCollection.read()
@@ -11,5 +18,7 @@ export default {
             view.mount()
             return view
         })
+        const form = new TodoForm()
+        form.mount()
     },
 }
